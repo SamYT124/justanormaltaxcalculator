@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Normal Tax Calculator</title>
+<style>
+body { font-family: "Times New Roman", serif; }
+</style>
+</head>
+<body>
+<h1>Normal Tax Calculator</h1>
+<input type="text" id="incomeInput" placeholder="income">
+<input type="text" id="taxRateInput" placeholder="tax rate (%)">
+<br>
+<button onclick="calculateTax()">Submit</button>
+<p id="result"></p>
+<p id="extraMessage"></p>
+
+<script>
+function calculateTax() {
+    let income = parseFloat(document.getElementById("incomeInput").value.trim());
+    let taxRatePercent = parseFloat(document.getElementById("taxRateInput").value.trim());
+
+    if (isNaN(income) || income < 0) {
+        document.getElementById("result").textContent = "valid income or gay";
+        return;
+    }
+    if (isNaN(taxRatePercent) || taxRatePercent < 0) {
+        document.getElementById("result").textContent = "valid tax rate or gay";
+        return;
+    }
+    let tax = income * (taxRatePercent / 100);
+    let afterTax = income - tax;
+
+    document.getElementById("result").textContent =
+        "tax = $" + tax.toFixed(2) + "  |  real price = $" + afterTax.toFixed(2);
+    let ql;
+
+    if (tax >= income*0.4) {
+        ql = [
+            "is it comforting knowing that you funded half the budget?",
+            "thanks for keeping the lights on",
+            "at least you know where the actual price disappears"
+        ];
+    } else if (tax >= income*0.25) {
+        ql = [
+            "you do your part, statistically",
+            "somewhere out there, a small government program thanks you",
+            "thanks for the contribution"
+        ];
+    } else {
+        ql = [
+            "at least you keep the economy breathing",
+            "wow, must be exhausting funding the entire country",
+            "you contribute, in spirit"
+        ];
+    }
+
+    const randomql = Math.floor(Math.random() * ql.length);
+    document.getElementById("extraMessage").textContent = ql[randomql];
+}
+</script>
+</body>
+</html>
